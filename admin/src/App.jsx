@@ -22,7 +22,7 @@ const App = () => {
     <div className='bg-[#F8F9FD]'>
       <ToastContainer/>
       <Navbar/>
-      <div className='flex items-center'>
+      <div className='flex items-start'>
         <Sidebar/>
         <Routes>
            <Route path="/" element={<></>}/>
@@ -32,7 +32,6 @@ const App = () => {
            <Route path="/doctor-list" element={<DoctorsList/>}/>
         </Routes>
       </div>
-
     </div>
   ) : (
     <>
