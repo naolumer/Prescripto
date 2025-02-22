@@ -11,7 +11,7 @@ createRoot(document.getElementById('root')).render(
   <BrowserRouter>
   <AdminContextProvider>
     <DoctorContextProvider>
-      ,<AppContextProvider>
+      <AppContextProvider>
         <App />
       </AppContextProvider>
     </DoctorContextProvider>
