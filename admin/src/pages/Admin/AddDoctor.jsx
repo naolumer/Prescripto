@@ -1,7 +1,20 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { assets } from '../../assets/assets'
 
 const AddDoctor = () => {
+
+    const [docImg,setDocImg] = useState(false)
+    const [name, setName] = useState("")
+    const [email,setEmail] = useState("")
+    const [password,setPassword] = useState("")
+    const [experience,setExperience] = useState("1 Year")
+    const [fees,setFees] = useState("")
+    const [about,setAbout] = useState("")
+    const [speciality,setSpeciality] = useState("General physician")
+    const [degree,setDegree] = useState("")
+    const [address1,setAddress1] = useState("")
+    const [address2,setAddress2] = useState("")
+
   return (
    <form className='m-5 w-full'>
         <p className='mb-3 text-lg font-medium'>Add Doctor</p>
@@ -60,12 +73,12 @@ const AddDoctor = () => {
                     <div className='flex-1 flex flex-col gap-1'>
                         <p>Speciality</p>
                         <select className='border rounded px-3 py-2' name="" id="">
-                            <option value="General physician">1 Year</option>
-                            <option value="Gynecologist">2 Year</option>
-                            <option value="Dermatologist">3 Year</option>
-                            <option value="Pediatricians">4 Year</option>
-                            <option value="Neurologist">5 Year</option>
-                            <option value="Gastroenterologist">6 Year</option>
+                            <option value="General physician">General physician</option>
+                            <option value="Gynecologist">Gynecologist</option>
+                            <option value="Dermatologist">Dermatologist</option>
+                            <option value="Pediatricians">Pediatricians</option>
+                            <option value="Neurologist">Neurologist</option>
+                            <option value="Gastroenterologist">Gastroenterologist</option>
                         </select>
                     </div>
 
