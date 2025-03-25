@@ -113,6 +113,29 @@ const login = async (req,res)=>{
     }
 }
 
-export {register,login}
+// Get user info
+
+const getProfile = async (req,res)=>{
+
+    const {userId} = req.body
+
+    const user = await userModel.findById(userId)
+
+    if (!user){
+        return res.json({
+            success:false,
+            message:"User not found"
+        })
+    }
+
+    res.json({
+        success:true,
+        userData: user
+    })
+
+}
+
+
+export {register,login,getProfile}
 
 
