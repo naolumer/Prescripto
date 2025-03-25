@@ -7,7 +7,7 @@ const userRouter = express.Router()
 
 userRouter.post("/register",register)
 userRouter.post("/login", login)
-userRouter.post("/get-profile",authUser,getProfile)
+userRouter.get("/get-profile",authUser,getProfile)
 userRouter.post("/update-profile",upload.single("image"),authUser,updateProfile)
 
 export default userRouter

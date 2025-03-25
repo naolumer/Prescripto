@@ -117,23 +117,21 @@ const login = async (req,res)=>{
 // Get user info
 
 const getProfile = async (req,res)=>{
-
+    try{
     const {userId} = req.body
 
-    const user = await userModel.findById(userId)
-
-    if (!user){
-        return res.json({
-            success:false,
-            message:"User not found"
-        })
-    }
+    const userData = await userModel.findById(userId).select("-password")
 
     res.json({
         success:true,
-        userData: user
+        userData
     })
-
+    } catch(error){
+        res.json({
+            success:false,
+            message:error.message
+        })
+    }
 }
 
 const updateProfile = async (req,res)=>{
@@ -141,7 +139,7 @@ const updateProfile = async (req,res)=>{
     const {userId,name,dob,gender,address,phone} = req.body
     const imageFile = req.file
 
-    if(!name || !dob ||!gender || !address ||!phone){
+    if(!name || !dob ||!gender ||!phone){
         return res.json({
             success:false,
             message:"Fill all the necessary fields"
@@ -158,8 +156,6 @@ const updateProfile = async (req,res)=>{
             await userModel.findByIdAndUpdate(userId,{image:imageURL})
         }
 
-        
-        
         res.json({
             success:true,
             message:"User profile updated!"
