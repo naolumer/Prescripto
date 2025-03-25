@@ -6,11 +6,17 @@ import userModel from "../models/userModel.js"
 // Sign up api
 
 const register = async (req,res)=>{
-
-    try{
     
     const {name,email,password} = req.body
 
+    if (!name || !email ||!password){
+        return res.json({
+            success:false,
+            message:"Missing Details"
+        })
+    }
+
+    try{
     const userExists = await userModel.findOne({email})
 
     if (userExists){
@@ -61,5 +67,52 @@ const register = async (req,res)=>{
 }
 
 // Login api
+
+const login = async (req,res)=>{
+    
+    const {email,password} = req.body
+
+    if (!email || !password){
+        return res.json({
+            success:false,
+            message:"Please enter email and password"
+        })
+    }
+    try{
+        const user = await userModel.find({email})
+
+        if(!user){
+            return res.json({
+                success:false,
+                message:"Invalid Email"
+            })
+        }
+        const isMatching = await bcrypt.compare(password,user.password)
+
+        if (!isMatching){
+            return res.json({
+                success:false,
+                message: "Invalid Password"
+            })
+        }
+
+        const token = jwt.sign({id:user._id},process.env.JWT_SECRET)
+
+        res.json({
+            success:true,
+            message: "Login successful!",
+            token : token
+        })
+
+
+    }catch(error){
+        res.json({
+            success:false,
+            message:error.message
+        })
+    }
+}
+
+export {register,login}
 
 
