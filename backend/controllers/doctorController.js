@@ -1,12 +1,11 @@
-import userModel from "../models/userModel.js"
+import doctorModel from "../models/doctorModel.js"
 
 const changeAvailability = async (req,res)=>{
 
-    const {docId}  = req.body
-
-    try {
-        const doctor = await userModel.findById({docId})
-        await userModel.findByIdAndUpdate(docId,{available:!doctor.availeble})
+    try { 
+        const {docId}  = req.body
+        const doctor = await doctorModel.findById(docId)
+        await doctorModel.findByIdAndUpdate(docId,{available:!doctor.available})
         
         res.json({
             success:true,
@@ -19,7 +18,6 @@ const changeAvailability = async (req,res)=>{
             message:error.message
         })
     }
-
 }
 
 export {changeAvailability}

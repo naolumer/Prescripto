@@ -12,7 +12,8 @@ const AdminContextProvider = (props)=>{
 
     const [doctors,setDoctors] = useState([])
 
-  const fetchDoctors = async ()=>{
+  
+    const fetchDoctors = async ()=>{
 
     try {
       const {data} = await axios.post(`${backendUrl}/api/admin/all-doctors`,{},{headers:{aToken}})
@@ -28,6 +29,17 @@ const AdminContextProvider = (props)=>{
     }
   }
 
+  const changeAvailability = async (docId)=>{
+
+    try{
+        const {data} = await axios.post(`${backendUrl}/api/admin/change-availability`,{docId},{headers:{aToken}})
+        data.success && toast.success(data.message)
+        data.success && fetchDoctors()
+    } catch(error){
+        toast.error(error.message)
+    }
+  }
+
 
 
     const value = {
@@ -35,7 +47,8 @@ const AdminContextProvider = (props)=>{
         setAToken,
         backendUrl,
         doctors,
-        fetchDoctors
+        fetchDoctors,
+        changeAvailability
     }
 
     return (
