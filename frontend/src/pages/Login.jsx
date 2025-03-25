@@ -1,4 +1,9 @@
-import React, { useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
+import axios from 'axios'
+import { toast } from 'react-toastify'
+import { AppContext } from '../context/AppContext'
+import { useNavigate } from 'react-router-dom'
+
 
 const Login = () => {
 
@@ -7,12 +12,59 @@ const Login = () => {
   const [password,setPassword] = useState("")
   const [name,setName] = useState("")
 
+  const navigate = useNavigate()
+
+  const {backendURL,token,setToken}  = useContext(AppContext)
+
   const onSubmitHandler = async(event)=>{
     event.preventDefault()
+
+    if (state==="Sign Up"){
+      try {
+        const {data} = await axios.post(`${backendURL}/api/user/register`,{name,email,password})
+        if (data.success){
+          toast.success(data.message)
+          localStorage.setItem("token",data.token)
+          setToken(data.token)
+          navigate("/")
+        
+        } else{
+          toast.error(data.message)
+        }
+
+      }catch(error){
+        toast.error(error.message)
+      }
+    } else {
+      
+      try {
+        
+        const {data} = await axios.post(`${backendURL}/api/user/login`,{email,password})
+        
+        if (data.success){
+          toast.success(data.message)
+          localStorage.setItem("token",data.token)
+          setToken(data.token)
+        
+        } else{
+          toast.error(data.message)
+        }
+
+      }catch(error){
+        toast.error(error.message)
+      }
+    }
+      
   }
   const onclickHandler = ()=>{
     state === "Sign Up"?setState("Login"):setState("Sign Up")
   }
+
+  useEffect(()=>{
+    if(token){
+      navigate("/")
+    }
+  },[token])
 
   return (
     <div className='flex flex-col gap-3 items-start justify-center mt-24 mb-[250px] mx-auto border border-gray-200 rounded-xl shadow-md px-8 py-8 w-[350px] sm:w-[380px] max-h-[600px]'>
