@@ -79,7 +79,7 @@ const login = async (req,res)=>{
         })
     }
     try{
-        const user = await userModel.find({email})
+        const user = await userModel.findOne({email})
 
         if(!user){
             return res.json({
@@ -98,7 +98,7 @@ const login = async (req,res)=>{
 
         const token = jwt.sign({id:user._id},process.env.JWT_SECRET)
 
-        res.json({
+        return res.json({
             success:true,
             message: "Login successful!",
             token : token
