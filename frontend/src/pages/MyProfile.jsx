@@ -49,7 +49,7 @@ const MyProfile = () => {
         <label htmlFor="image">
           <div className='inline-block cursor-pointer relative'>
             <img className='w-36 rounded opacity-75' src={image ? URL.createObjectURL(image):userData.image} alt="" />
-            <img className='w-10 absolute bottom-12 right-12' src={image?"":assets.upload_icon} alt="" />
+            <img className='w-10 absolute bottom-12 right-12' src={image?"":assets.upload_icon} alt=""/>
           </div>
           <input onChange={(e)=> setImage(e.target.files[0])} type="file" id="image" hidden/>
         </label>
@@ -57,7 +57,7 @@ const MyProfile = () => {
         <img className='w-36 rounded' src={userData.image}  alt="" />
       }
       
-      {
+      { 
         isEdit
         ? <input className='bg-gray-50 text-3xl font-medium mx-w-60 mt-4' type='text' onChange={e=>setUserData(prev=>({...prev,name:e.target.value}))} value={userData.name}/>
       : <p className='font-medium text-3xl text-neutral-800 mt-4'>{userData.name}</p>
