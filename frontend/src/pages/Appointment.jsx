@@ -1,9 +1,9 @@
-import React, { useEffect } from 'react'
+import { useEffect } from 'react'
 import { useParams } from 'react-router-dom'
-import { AppContext } from '../context/AppContext'
-import { useContext } from 'react'
-import { useState } from 'react'
-import { assets } from '../assets/assets'
+import { AppContext} from '../context/AppContext'
+import { useContext} from 'react'
+import { useState} from 'react'
+import { assets} from '../assets/assets'
 import RelatedDoctors from '../components/RelatedDoctors'
 
 const Appointment = () => {
@@ -75,7 +75,7 @@ const Appointment = () => {
 
   useEffect(()=>{
     console.log(docSlots)
-  },[docSlots])
+  },[])
   return docInfo && (
     <div>
       {/* {--------Doctor Details} */}
