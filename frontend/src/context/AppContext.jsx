@@ -33,13 +33,25 @@ const AppContextProvider= (props)=>{
           }
     
         }catch(error){
-          toast.error(error)
+          toast.error(error.message)
         }
       }
 
+    
+
+    const value ={
+        doctors,
+        currencySymbol,
+        backendURL,
+        setDoctors,
+        token,setToken,
+        userData,setUserData,
+        getUserInfo,getDoctors
+    }
+    
     useEffect(()=>{
         getDoctors()
-    },[doctors])
+    },[])
 
     useEffect(()=>{
         if (token){
@@ -49,16 +61,6 @@ const AppContextProvider= (props)=>{
         }
     },[token])
 
-
-    const value ={
-        doctors,
-        currencySymbol,
-        backendURL,
-        setDoctors,
-        token,setToken,
-        userData,setUserData,
-        getUserInfo
-    }
 
     return (
         <AppContext.Provider value={value}>
