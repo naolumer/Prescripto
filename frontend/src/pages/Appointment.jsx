@@ -11,7 +11,7 @@ import { useNavigate } from 'react-router-dom'
 
 const Appointment = () => {
   const {docId} = useParams()
-  const {doctors,currencySymbol,backendUrl, token,getDoctors} = useContext(AppContext)
+  const {doctors,currencySymbol,backendURL, token,getDoctors} = useContext(AppContext)
   const daysOfWeek = ["SUN","MON","TUE","WED","THU","FRI","SAT"]
 
   const [docInfo,setDocInfo] = useState(null)
@@ -86,13 +86,7 @@ const Appointment = () => {
       const slotDate = day+ "_"+month+"_"+year
       console.log(slotDate)
       
-      const {data} = await axios.post("http://localhost:4000/api/user/book-appointment", {
-        docId, slotDate, slotTime
-      }, {
-        headers: {
-          token
-        }
-      });
+      const {data} = await axios.post(`${backendURL}/api/user/book-appointment`,{docId, slotDate, slotTime},{headers:{token}})
       if(data.success){
         toast.success(data.message)
         getDoctors()
