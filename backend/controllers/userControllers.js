@@ -6,6 +6,7 @@ import {v2 as cloudinary} from "cloudinary"
 import appointmentModel from "../models/appointmentModel.js"
 import doctorModel from "../models/doctorModel.js"
 
+
 // Sign up api
 
 const register = async (req,res)=>{
@@ -231,7 +232,24 @@ const bookAppointment = async (req,res)=>{
     }
 }
 
+// Api to get user appointmets for frontend my appointments page
 
-export {register,login,getProfile,updateProfile,bookAppointment}
+const listAppointment = async(req,res)=>{
+    try{
+        const {userId} = req.body
+        const appointments = await appointmentModel.find({userId})
+
+        res.json({
+            success:true,
+            appointments
+        })
+    } catch(error){
+        console.log(error)
+        res.json({success:false, message:error.message})
+    }
+}
+
+
+export {register,login,getProfile,updateProfile,bookAppointment,listAppointment}
 
 
