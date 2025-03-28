@@ -5,7 +5,7 @@ import axios from 'axios'
 import { useState } from 'react'
 
 const MyAppointments = () => {
-  const {backendURL,token} = useContext(AppContext)
+  const {backendURL,token,getDoctors} = useContext(AppContext)
 
   const [appointments,setAppointments] = useState([])
   const months = ["","Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"]
@@ -15,6 +15,8 @@ const MyAppointments = () => {
     return dateArray[0]+" "+months[Number(dateArray[1])]+" "+dateArray[2]
   }
 
+  
+  
   const getUserAppointments = async()=>{
     try{
         const {data} = await axios.get(`${backendURL}/api/user/appointments`,{headers:{token}})
@@ -22,6 +24,25 @@ const MyAppointments = () => {
           setAppointments(data.appointments.reverse())
         }
     } catch(error){
+      console.log(error)
+      toast.error(error.message)
+    }
+  }
+
+  const cancelAppointment = async(appointmentId)=>{
+
+    try{
+     
+      const {data} = await axios.post(backendURL+"/api/user/cancel-appointment",{appointmentId},{headers:{token}})
+      if (data.success){
+        toast.success(data.message)
+        getUserAppointments()
+        getDoctors()
+      } else {
+        toast.error(data.message)
+      }
+
+    }catch(error){
       console.log(error)
       toast.error(error.message)
     }
@@ -37,7 +58,7 @@ const MyAppointments = () => {
       <p className='pb-3 mt-12 font-medium text-zinc-700 border-b '>My appointments</p>
       <div>
         {
-          appointments.slice(0,3).map((item,index)=>(
+          appointments.map((item,index)=>(
           <div className='grid grid-cols-[1fr_2fr] gap-4 sm:flex sm:gap-6 py-2 border-b' key={index}>
             <div>
               <img className='w-32 bg-indigo-50' src={item.docData.image} alt="" />
@@ -52,8 +73,9 @@ const MyAppointments = () => {
             </div>
             <div></div>
             <div className='flex flex-col gap-2 justify-end'>
-              <button className='text-sm text-stone-500 text-center sm:min-w-48 py-2 border hover:bg-primary hover:text-white transition-all duration-300'>Pay Online</button>
-              <button className='text-sm text-stone-500 text-center sm:min-w-48 py-2 border hover:bg-red-500 hover:text-white transition-all duration-300'>Cancel appointment</button>
+              {!item.cancelled && <button className='text-sm text-stone-500 text-center sm:min-w-48 py-2 border hover:bg-primary hover:text-white transition-all duration-300'>Pay Online</button>}
+              {!item.cancelled && <button onClick={()=> cancelAppointment(item._id)} className='text-sm text-stone-500 text-center sm:min-w-48 py-2 border hover:bg-red-500 hover:text-white transition-all duration-300'>Cancel appointment</button>}
+              {item.cancelled && <button className='sm:min-w-48 py-2 border border-red-500 rounded text-red-500'>Appointment cancelled</button>}
             </div>
             </div>
           ))}
