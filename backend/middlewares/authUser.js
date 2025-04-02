@@ -1,7 +1,6 @@
 import jwt from "jsonwebtoken"
 
 
-
 const authUser =async (req,res,next)=>{
     
     const {token} = req.headers
@@ -25,7 +24,6 @@ const authUser =async (req,res,next)=>{
 
         req.body.userId  = tokenDecode.id
         next()
-
 
     }catch(error){
         res.json({
