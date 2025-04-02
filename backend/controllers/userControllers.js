@@ -7,6 +7,7 @@ import appointmentModel from "../models/appointmentModel.js"
 import doctorModel from "../models/doctorModel.js"
 
 
+
 // Sign up api
 
 const register = async (req,res)=>{
@@ -291,6 +292,11 @@ const cancelAppointment = async (req,res)=>{
         })
     }
 }
+
+
+
+// API to make payment using razorpay
+
 
 
 export {register,login,getProfile,updateProfile,bookAppointment,listAppointment,cancelAppointment}
