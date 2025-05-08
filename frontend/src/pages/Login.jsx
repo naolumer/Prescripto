@@ -96,7 +96,6 @@ const Login = () => {
         </label>
         </div>
         
-
         <button className='bg-primary text-white w-full py-[8px] rounded-md cursor-pointer' type='submit'>{state}</button>
       </form>
 
